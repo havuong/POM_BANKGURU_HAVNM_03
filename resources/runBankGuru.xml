@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Suite" parallel="false">
-  <test name="Test">
-    <classes>
-      <class name="com.bankguru.login.Login_01_CreateUserAndLogin"/>
-    </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
+<suite name="Bank Guru" parallel="false">
+
+	<test name="Run on FIREFOX browser">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
+		</classes>
+	</test>
+	<test name="Run on CHROME browser">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
+		</classes>
+	</test>
+	<test name="Run on IE browser">
+		<parameter name="browser" value="ie" />
+		<classes>
+			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
+		</classes>
+	</test>
+</suite>

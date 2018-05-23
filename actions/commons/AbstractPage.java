@@ -46,7 +46,7 @@ public class AbstractPage {
 		element.click();
 	}
 
-	public void sendkeyToelement(WebDriver driver, String locator, String value) {
+	public void sendkeyToElement(WebDriver driver, String locator, String value) {
 		WebElement element = driver.findElement(By.xpath(locator));
 		element.clear();
 		element.sendKeys(value);
@@ -91,14 +91,19 @@ public class AbstractPage {
 		}
 	}
 
-	public void isControlDisplayed(WebDriver driver, String locator) {
+	public boolean isControlDisplayed(WebDriver driver, String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
-		element.isDisplayed();
+		return element.isDisplayed();
 	}
 
-	public void isControlEnabled(WebDriver driver, String locator) {
+	public boolean isControlEnabled(WebDriver driver, String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
-		element.isEnabled();
+		return element.isEnabled();
+	}
+	
+	public boolean isControlSelected(WebDriver driver, String locator) {
+		WebElement element = driver.findElement(By.xpath(locator));
+		return element.isSelected();
 	}
 
 	public void acceptAlert(WebDriver driver) {
@@ -230,30 +235,30 @@ public class AbstractPage {
 				+ "typeof arguments[0].naturalWidth != 'underined' && arguments[0].naturalWidth > 0", element);
 	}
 
-	public void waitForControlPresence(WebDriver driver, WebElement element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+	public void waitForControlPresence(WebDriver driver, WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
-	public void waitForControlVisible(WebDriver driver, String locator, int time) {
+	public void waitForControlVisible(WebDriver driver, String locator) {
 		By by = By.xpath(locator);
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
-	public void waitForControlClickable(WebDriver driver, WebElement element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+	public void waitForControlClickable(WebDriver driver, WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
-	public void waitForControlNotVisible(WebDriver driver, String locator, int time) {
+	public void waitForControlNotVisible(WebDriver driver, String locator) {
 		By by = By.xpath(locator);
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 
-	public void waitForAlertPresence(WebDriver driver, int time) {
-		new WebDriverWait(driver, time).ignoring(NoAlertPresentException.class)
+	public void waitForAlertPresence(WebDriver driver) {
+		new WebDriverWait(driver, 60).ignoring(NoAlertPresentException.class)
 				.until(ExpectedConditions.alertIsPresent());
 	}
 
