@@ -7,12 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import commons.Constants;
 
 public class AbstractTest {
 	WebDriver driver;
 	
-	public WebDriver openMultiBrowser(String browser){
+	public WebDriver openMultiBrowser(String browser, String url){
 		if (browser.equals("firefox")) {
 			driver = new FirefoxDriver();
 		} else if (browser.equals("chrome")) {
@@ -23,7 +22,7 @@ public class AbstractTest {
 			driver = new InternetExplorerDriver();
 		}
 		
-		driver.get(Constants.DEV_URL);
+		driver.get(url);
 		driver.manage().timeouts().implicitlyWait(30,  TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		return driver;

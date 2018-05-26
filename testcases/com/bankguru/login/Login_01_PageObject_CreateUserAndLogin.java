@@ -7,10 +7,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import bankguru.pages.HomePagePO;
+import bankguru.pages.LoginPagePO;
+import bankguru.pages.RegisterPagePO;
 import commons.AbstractTest;
-import pages.HomePagePO;
-import pages.LoginPagePO;
-import pages.RegisterPagePO;
+import commons.PageFactoryManager;
 
 public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 	WebDriver driver;
@@ -19,22 +20,18 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 	private RegisterPagePO registerPage;
 	private HomePagePO homePage;
 
-	@Parameters({ "browser" })
+	@Parameters({ "browser", "url" })
 	@BeforeClass
-	public void beforeClass(String browser) {
-		driver = openMultiBrowser(browser);
-		loginPage = new LoginPagePO(driver);
+	public void beforeClass(String browser, String url) {
+		driver = openMultiBrowser(browser, url);
+		loginPage = PageFactoryManager.getLoginPage(driver);
 		email = "autotest" + randomData() + "@yopmail.com";
 	}
 
 	@Test
 	public void TC_Login_01_CreateUser() {
-
 		loginUrl = loginPage.getLoginPageUrl();
-
-		loginPage.clickToHereLink();
-		registerPage = new RegisterPagePO(driver);
-
+		registerPage = loginPage.clickToHereLink();
 		registerPage.inputToEmailIDTextbox(email);
 		registerPage.clickToSubmitButton();
 		username = registerPage.getUserIDInfo();
@@ -43,14 +40,10 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 
 	@Test
 	public void TC_Login_02_LoginApp() {
-		registerPage.openLoginPage(loginUrl);
-		loginPage = new LoginPagePO(driver);
-
+		loginPage = registerPage.openLoginPage(loginUrl);
 		loginPage.inputToUsernameTextbox(username);
 		loginPage.inputToPasswordTextbox(password);
-		loginPage.clickToSubmitButton();
-
-		homePage = new HomePagePO(driver);
+		homePage = loginPage.clickToSubmitButton();
 		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
 
 	}

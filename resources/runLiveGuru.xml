@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Live Guru" parallel="false">
+
+	<test name="Run on FIREFOX browser">
+		<parameter name="browser" value="firefox" />
+		<parameter name="url" value="http://live.guru99.com" />
+		<classes>
+			<class name="com.liveguru.login.Login_01_Validation" />
+		</classes>
+	</test>
+
+</suite>

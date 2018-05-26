@@ -3,11 +3,12 @@
 
 	<test name="Run on FIREFOX browser">
 		<parameter name="browser" value="firefox" />
+		<parameter name="url" value="http://demo.guru99.com/v4" />
 		<classes>
 			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
 		</classes>
 	</test>
-	<test name="Run on CHROME browser">
+<!-- 	<test name="Run on CHROME browser">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
@@ -18,5 +19,5 @@
 		<classes>
 			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
 		</classes>
-	</test>
+	</test> -->
 </suite>
