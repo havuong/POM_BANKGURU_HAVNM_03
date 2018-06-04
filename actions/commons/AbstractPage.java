@@ -15,6 +15,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import bankguru.AbstractPageUI;
+import bankguru.pages.DeleteCustomerPagePO;
+import bankguru.pages.EditCustomerPagePO;
+import bankguru.pages.HomePagePO;
+import bankguru.pages.LoginPagePO;
+import bankguru.pages.NewCustomerPagePO;
+import bankguru.pages.PageFactoryManager;
+
 public class AbstractPage {
 
 	public void openAnyUrl(WebDriver driver, String url) {
@@ -42,6 +50,12 @@ public class AbstractPage {
 	}
 
 	public void clickToElement(WebDriver driver, String locator) {
+		WebElement element = driver.findElement(By.xpath(locator));
+		element.click();
+	}
+
+	public void clickToElement(WebDriver driver, String locator, String value) {
+		locator = String.format(locator, value);
 		WebElement element = driver.findElement(By.xpath(locator));
 		element.click();
 	}
@@ -96,11 +110,17 @@ public class AbstractPage {
 		return element.isDisplayed();
 	}
 
+	public boolean isControlDisplayed(WebDriver driver, String locator, String value) {
+		locator = String.format(locator, value);
+		WebElement element = driver.findElement(By.xpath(locator));
+		return element.isDisplayed();
+	}
+
 	public boolean isControlEnabled(WebDriver driver, String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.isEnabled();
 	}
-	
+
 	public boolean isControlSelected(WebDriver driver, String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.isSelected();
@@ -236,24 +256,18 @@ public class AbstractPage {
 	}
 
 	public void waitForControlPresence(WebDriver driver, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 60);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
-	public void waitForControlVisible(WebDriver driver, String locator) {
-		By by = By.xpath(locator);
-		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-	}
-
 	public void waitForControlClickable(WebDriver driver, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 60);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	public void waitForControlNotVisible(WebDriver driver, String locator) {
 		By by = By.xpath(locator);
-		WebDriverWait wait = new WebDriverWait(driver, 60);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 
@@ -262,4 +276,48 @@ public class AbstractPage {
 				.until(ExpectedConditions.alertIsPresent());
 	}
 
+	public void waitForControlVisible(WebDriver driver, String locator) {
+		By by = By.xpath(locator);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
+
+	public void waitForControlVisible(WebDriver driver, String locator, String value) {
+		locator = String.format(locator, value);
+		By by = By.xpath(locator);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
+
+	public NewCustomerPagePO openNewCustomerPage(WebDriver driver) {
+		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "New Customer");
+		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "New Customer");
+		return PageFactoryManager.getNewCustomerPage(driver);
+	}
+
+	public EditCustomerPagePO openEditCustomerPage(WebDriver driver) {
+		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Edit Customer");
+		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Edit Customer");
+		return PageFactoryManager.getEditCustomerPage(driver);
+	}
+
+	public DeleteCustomerPagePO openDeleteCustomerPage(WebDriver driver) {
+		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Delete Customer");
+		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Delete Customer");
+		return PageFactoryManager.getDeleteCustomerPage(driver);
+	}
+
+	public HomePagePO openHomePage(WebDriver driver) {
+		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Manager");
+		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Manager");
+		return PageFactoryManager.getHomePage(driver);
+	}
+	
+	public LoginPagePO openLogOutPage(WebDriver driver) {
+		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Log out");
+		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK, "Log out");
+		acceptAlert(driver);
+		waitForControlVisible(driver, AbstractPageUI.LOGIN_FORM_LINK);
+		return PageFactoryManager.getLoginPage(driver);
+	}
 }

@@ -5,7 +5,7 @@
 		<parameter name="browser" value="firefox" />
 		<parameter name="url" value="http://demo.guru99.com/v4" />
 		<classes>
-			<class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin" />
+			<class name="com.bankguru.login.Login_01_CreateUserAndLogin" />
 		</classes>
 	</test>
 <!-- 	<test name="Run on CHROME browser">
